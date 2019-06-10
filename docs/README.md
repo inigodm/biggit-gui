@@ -1,37 +1,16 @@
-## Welcome to GitHub Pages
+# Welcome to the biggit wiki!
 
-You can use the [editor on GitHub](https://github.com/smanero/biggit/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+Project with aim in LEARNING!!! Work with IntelliJ IDEA, Kotlin, LibGDX, Gradle and Git as main aims.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+On the other side, if we get to test, develop and design a release version for those main concepts...
+eValhalla's doors would well be wide open for us...
 
-### Markdown
+Git repository: https://github.com/inigodm/biggit-gui
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+## Settings
+ - ubuntu-18
+ - openjdk-1.8
+ - gradle-wrapper-4.10.3
+ - kotlin-1.3.31
+ - jgit-5.3.1 [https://mvnrepository.com/artifact/org.eclipse.jgit/org.eclipse.jgit/5.3.1.201904271842-r]
 
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/smanero/biggit/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.

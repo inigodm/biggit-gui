@@ -6,3 +6,17 @@ sourceCompatibility = 1.8
 sourceSets.main.java.srcDirs = [ "src/" ]
 sourceSets.test.java.srcDirs = [ "test/" ]
 sourceSets.main.resources.srcDirs = [ "assets/" ]
+
+jacoco {
+    toolVersion = "0.8.3"
+    reportsDir = file("build/jacocoReportDir")
+}
+
+jacocoTestReport {
+    group = "Reporting"
+    reports {
+        xml.enabled true
+        csv.enabled false
+        html.enabled true
+    }
+}

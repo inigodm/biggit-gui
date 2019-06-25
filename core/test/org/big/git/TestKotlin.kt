@@ -1,4 +1,4 @@
-package com.big.git
+package org.big.git
 
 import org.big.git.BigGitApp
 import org.junit.Assert.assertTrue

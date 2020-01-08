@@ -1,18 +1,16 @@
 package org.big.git
 
 import org.big.git.BigGitApp
-import org.junit.Assert.assertTrue
-import org.junit.Assert.assertFalse
-import org.junit.Before
-import org.junit.Test
-import org.mockito.ArgumentMatchers.anyString
+import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import org.mockito.Mockito.*
 
 class TestKotlin{
 
     var bga: BigGitApp? = null
 
-    @Before
+    @BeforeEach
     fun init(){
         bga = spy(BigGitApp::class.java)
     }
@@ -27,7 +25,7 @@ class TestKotlin{
     fun mockito_working(){
         var t = spy(T::class.java)
         t.foo("lala")
-        verify(t, only()).foo(anyString())
+        verify(t, times(1)).foo(anyString())
     }
 
 }

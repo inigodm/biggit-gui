@@ -8,6 +8,7 @@ import org.eclipse.jgit.api.Git
 import org.eclipse.jgit.errors.RepositoryNotFoundException
 import org.eclipse.jgit.lib.TextProgressMonitor
 import java.io.File
+import java.io.OutputStream
 import java.io.PrintWriter
 import java.io.Writer
 
@@ -51,5 +52,9 @@ class JGit(var writer: Writer = PrintWriter(System.out)): inigo.gitgui.git.Git{
         status.untracked.forEach { res.get("untracked")!!.add(FileInfo(path=it)) }
         status.untrackedFolders.forEach { res.get("untrackedFolders")!!.add(FileInfo(path=it)) }
         return Gson().toJson(res)
+    }
+
+    override fun setOutStream(os: OutputStream) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

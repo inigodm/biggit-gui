@@ -6,9 +6,12 @@ import inigo.gitgui.git.utils.buildFileInfo
 import inigo.gitgui.git.utils.buildVoidStatusResponse
 import inigo.gitgui.git.utils.runCommand
 import java.io.File
+import java.io.OutputStream
+import java.io.PrintStream
 import java.util.function.Consumer
 
-class CLIGit(var path: String) : Git{
+class CLIGit(var path: String, var consumer: Consumer<String> = Consumer { println(it) }) : Git{
+    lateinit var ps: PrintStream
 
     override fun clone(URI: String, directory: String, allBranches: Boolean) {
         "git clone $URI $directory".runCommand(workingDir = File(directory))
@@ -27,9 +30,11 @@ class CLIGit(var path: String) : Git{
         val output = mutableListOf<String>()
         var res = buildVoidStatusResponse()
         try {
-            "git status --porcelain=v2".runCommand(workingDir = File(path), consumer = Consumer { output.add(it) })
+            "git status --porcelain=v2".runCommand(workingDir = File(path), consumer = Consumer { output.add(it); consumer.accept(it) })
+            ps.flush()
         }catch (e: Exception){
             e.message
+            e.printStackTrace()
         }
         output.forEach {
             val clas = it.substring(2, 4)
@@ -51,9 +56,15 @@ class CLIGit(var path: String) : Git{
             }
             if (clas.substring(1,2).equals(" ")) res.get("staged")!!.add(file)
         }
+        println(output)
         val gson = Gson()
         return gson.toJson(res)
         }
+
+    override fun setOutStream(os: OutputStream) {
+        ps = PrintStream(os);
+        consumer = Consumer { ps.println(it) }
+    }
 }
 
 /*

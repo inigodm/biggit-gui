@@ -1,6 +1,6 @@
 package inigo.gitgui.git.main
 
-import inigo.gitgui.git.utils.runCommand
+import git.utils.runCommand
 
 
 object Main {

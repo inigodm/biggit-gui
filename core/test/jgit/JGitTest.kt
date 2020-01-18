@@ -2,7 +2,7 @@ package inigo.gitgui.jgit
 
 import inigo.gitgui.git.exceptions.GitException
 import inigo.gitgui.git.jgit.JGit
-import inigo.gitgui.git.utils.runCommand
+import git.utils.runCommand
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach

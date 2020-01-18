@@ -4,7 +4,7 @@ import com.google.gson.Gson
 import inigo.gitgui.git.Git
 import inigo.gitgui.git.utils.buildFileInfo
 import inigo.gitgui.git.utils.buildVoidStatusResponse
-import inigo.gitgui.git.utils.runCommand
+import git.utils.runCommand
 import java.io.File
 import java.io.OutputStream
 import java.io.PrintStream

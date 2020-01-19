@@ -17,7 +17,7 @@ class AsyncRunner(val consumer: Consumer<String> = Consumer { println(it) }) : C
     private val job = Job() // or SupervisorJob()
     override val coroutineContext = job + Dispatchers.Default
 
-    fun runAsync(workingDir: File, command: String, delayMiliseconds: Long = 5000) {
+    fun runAsync(workingDir: File, command: String, delayMiliseconds: Long = 10000) {
         var job = launch {
             runCommand(workingDir, command)
         }
@@ -26,7 +26,7 @@ class AsyncRunner(val consumer: Consumer<String> = Consumer { println(it) }) : C
         }
     }
 
-    suspend fun cancelCommandOnTimeout(job: Job, delayMiliseconds: Long = 5000) {
+    private suspend fun cancelCommandOnTimeout(job: Job, delayMiliseconds: Long) {
         delay(delayMiliseconds)
         if (!job.isCompleted) {
             job.cancel()
@@ -34,7 +34,7 @@ class AsyncRunner(val consumer: Consumer<String> = Consumer { println(it) }) : C
         }
     }
 
-    fun runCommand(workingDir: File, command: String) {
+    private fun runCommand(workingDir: File, command: String) {
         val builder = ProcessBuilder()
         builder.command("sh", "-c", command)
         builder.directory(workingDir)

@@ -2,8 +2,8 @@ package inigo.gitgui.git.jgit
 
 import com.google.gson.Gson
 import inigo.gitgui.git.exceptions.GitException
-import inigo.gitgui.git.utils.FileInfo
-import inigo.gitgui.git.utils.buildVoidStatusResponse
+import git.utils.FileInfo
+import git.utils.buildVoidStatusResponse
 import org.eclipse.jgit.api.Git
 import org.eclipse.jgit.errors.RepositoryNotFoundException
 import org.eclipse.jgit.lib.TextProgressMonitor

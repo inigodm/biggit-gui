@@ -1,9 +1,9 @@
 package inigo.gitgui.git.cli
 
 import com.google.gson.Gson
+import git.utils.StatusResponse
 import inigo.gitgui.git.Git
-import inigo.gitgui.git.utils.buildFileInfo
-import inigo.gitgui.git.utils.buildVoidStatusResponse
+import git.utils.buildVoidStatusResponse
 import git.utils.runCommand
 import java.io.File
 import java.io.OutputStream
@@ -14,12 +14,12 @@ class CLIGit(var path: String, var consumer: Consumer<String> = Consumer { print
     lateinit var ps: PrintStream
 
     override fun clone(URI: String, directory: String, allBranches: Boolean) {
-        "git clone $URI $directory".runCommand(workingDir = File(directory))
         path = directory
+        "git clone $URI $path".runCommand(File(path))
     }
 
     override fun init(directory: String) {
-        "git init".runCommand(workingDir = File(path))
+        "git init".runCommand(File(path))
     }
 
     override fun open(directory: String) {
@@ -30,36 +30,23 @@ class CLIGit(var path: String, var consumer: Consumer<String> = Consumer { print
         val output = mutableListOf<String>()
         var res = buildVoidStatusResponse()
         try {
-            "git status --porcelain=v2".runCommand(workingDir = File(path), consumer = Consumer { output.add(it); consumer.accept(it) })
+            "git status --porcelain=v2".runCommand(File(path), Consumer { output.add(it); consumer.accept(it) })
             ps.flush()
-        }catch (e: Exception){
+        } catch (e: Exception) {
             e.message
             e.printStackTrace()
         }
+        var sr = StatusResponse()
         output.forEach {
             val clas = it.substring(2, 4)
-            val file = buildFileInfo(it)
-            when(clas){
-                " M", "M " -> res.get("modified")!!.add(file)
-                "AM", "A " -> res.get("added")!!.add(file)
-                "??" -> if (it.endsWith("/")){
-                            res.get("untrackeddirectory")!!.add(file)
-                        }else{
-                            res.get("untracked")!!.add(file)
-                        }
-                "RM", "R " -> {
-                        res.get("removed")!!.add(file)
-                        res.get("added")!!.add(file)
-                        res.get("modified")!!.add(file)
-                        }
-                "!!" -> res.get("ignored")!!.add(file)
-            }
-            if (clas.substring(1,2).equals(" ")) res.get("staged")!!.add(file)
+            sr.evaluate(it)
+
         }
         println(output)
         val gson = Gson()
+        println(gson.to(res))
         return gson.toJson(res)
-        }
+    }
 
     override fun setOutStream(os: OutputStream) {
         ps = PrintStream(os);

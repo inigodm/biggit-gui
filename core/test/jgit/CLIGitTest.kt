@@ -1,4 +1,4 @@
-package inigo.gitgui.jgit
+package jgit
 
 import inigo.gitgui.git.cli.CLIGit
 import inigo.gitgui.git.exceptions.GitException

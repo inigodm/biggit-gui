@@ -1,4 +1,36 @@
-package inigo.gitgui.git.utils
+package git.utils
+
+class StatusResponse{
+    var files = mutableListOf<FileInfo>();
+
+    fun evaluate(line: String){
+        val info = line.split("\\s+".toRegex())
+        if (info.get(0) == "?") files.add(FileInfo(path = info.get(1)))
+        if (info.get(0) == "!") files.add(FileInfo(path = info.get(1)))
+        if (info.get(0) == "1") files.add(FileInfo(inHEAD = info.get(6), inIndex = info.get(7), path = info.get(8)))
+        if (info.get(0) == "2") files.add(FileInfo(inHEAD = info.get(6), inIndex = info.get(7), path = info.get(9), previousPath = info.get(10), xScore=info.get(8)))
+        if (info.get(0).toUpperCase() == "U") files.add(FileInfo(path = info.get(10)))
+    }
+}
+
+/*var file = sr.files.get(0)
+            when(clas){
+                " M", "M " -> res.get("modified")!!.add(file)
+                "AM", "A " -> res.get("added")!!.add(file)
+                "??" -> if (it.endsWith("/")){
+                            res.get("untrackeddirectory")!!.add(file)
+                        }else{
+                            res.get("untracked")!!.add(file)
+                        }
+                "RM", "R " -> {
+                        res.get("removed")!!.add(file)
+                        res.get("added")!!.add(file)
+                        res.get("modified")!!.add(file)
+                        }
+                "!!" -> res.get("ignored")!!.add(file)
+            }
+            if (clas.substring(1,2).equals(" ")) res.get("staged")!!.add(file)
+        }*/
 
 fun buildVoidStatusResponse(): MutableMap<String, MutableSet<FileInfo>> {
     var res = mutableMapOf<String, MutableSet<FileInfo>>()
@@ -15,16 +47,12 @@ fun buildVoidStatusResponse(): MutableMap<String, MutableSet<FileInfo>> {
     return res
 }
 
-fun buildFileInfo(line: String): FileInfo{
-    println(line)
-    val info = line.split(" ")
-    if (info.get(0) == "1") return FileInfo(inHEAD = info.get(6), inIndex = info.get(7), path = info.get(8))
-    if (info.get(0) == "2") return FileInfo(inHEAD = info.get(6), inIndex = info.get(7), path = info.get(9), previousPath = info.get(10))
-    if (info.get(0) == "U") return FileInfo(path = info.get(9))
-    return FileInfo(path = info.get(1))
-}
-
-class FileInfo(val inHEAD: String = "", val inIndex: String = "", val path: String, val previousPath: String = "")
+data class FileInfo(
+        val inHEAD: String = "",
+        val inIndex: String = "",
+        val path: String,
+        val previousPath: String = "",
+        val xScore: String = "")
 
 /*
 Changed Tracked Entries

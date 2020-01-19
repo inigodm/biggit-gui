@@ -29,7 +29,7 @@ public class MainWindow {
     }
 
     private void mnCloneActionPerformed(ActionEvent e) {
-        git.status();
+        String res = git.status();
         try {
             logOs.flush();
         } catch (IOException ex) {

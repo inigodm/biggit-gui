@@ -52,8 +52,14 @@ data class FileInfo(
         val inIndex: String = "",
         val path: String,
         val previousPath: String = "",
-        val xScore: String = "")
+        val xScore: String = ""
+        val octhead: FilePermissions = FilePermissions(""))
 
+class FilePermissions(){
+    constructor(octal: String) : this() {
+
+    }
+}
 /*
 Changed Tracked Entries
 

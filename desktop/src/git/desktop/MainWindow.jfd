@@ -55,35 +55,75 @@ new FormModel {
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class javax.swing.BoxLayout ) {
 				"axis": 0
 			} ) {
-				name: "panel4"
-			} )
-			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.intellij.uiDesigner.core.GridLayoutManager ) {
-				"$columnCount": 2
-				"$rowCount": 4
-			} ) {
-				name: "panel2"
-				add( new FormContainer( "javax.swing.JTabbedPane", new FormLayoutManager( class javax.swing.JTabbedPane ) ) {
-					name: "tabbedPane1"
-					add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
-						name: "scrollPane1"
-						add( new FormComponent( "javax.swing.JTextArea" ) {
-							name: "taLog"
-							"lineWrap": true
-							"wrapStyleWord": true
-							"editable": false
+				name: "panel5"
+				add( new FormContainer( "javax.swing.JSplitPane", new FormLayoutManager( class javax.swing.JSplitPane ) ) {
+					name: "splitPane2"
+					"orientation": 0
+					"continuousLayout": true
+					"oneTouchExpandable": true
+					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class javax.swing.BoxLayout ) {
+						"axis": 0
+					} ) {
+						name: "panel4"
+						add( new FormContainer( "javax.swing.JSplitPane", new FormLayoutManager( class javax.swing.JSplitPane ) ) {
+							name: "splitPane1"
+							"continuousLayout": true
+							"oneTouchExpandable": true
+							"doubleBuffered": true
+							"autoscrolls": true
+							"componentOrientation": sfield java.awt.ComponentOrientation LEFT_TO_RIGHT
+							"preferredSize": new java.awt.Dimension( 89, 58 )
 						} )
-					}, new FormLayoutConstraints( null ) {
-						"title": "Log"
+					}, new FormLayoutConstraints( class java.lang.String ) {
+						"value": "left"
 					} )
-				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
-					"row": 2
-					"colSpan": 2
-					"fill": 3
+					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.intellij.uiDesigner.core.GridLayoutManager ) {
+						"$columnCount": 2
+						"$rowCount": 4
+					} ) {
+						name: "panel2"
+						add( new FormContainer( "javax.swing.JTabbedPane", new FormLayoutManager( class javax.swing.JTabbedPane ) ) {
+							name: "tabbedPane1"
+							add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+								name: "scrollPane1"
+								add( new FormComponent( "javax.swing.JTextArea" ) {
+									name: "taLog"
+									"lineWrap": true
+									"wrapStyleWord": true
+									"editable": false
+								} )
+							}, new FormLayoutConstraints( null ) {
+								"title": "Log"
+							} )
+							add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+								name: "gitTree"
+								add( new FormComponent( "javax.swing.JTextArea" ) {
+									name: "taGitTree"
+									"lineWrap": true
+									"wrapStyleWord": true
+									"editable": false
+								} )
+							}, new FormLayoutConstraints( null ) {
+								"title": "Tree"
+							} )
+						}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+							"row": 2
+							"colSpan": 2
+							"fill": 3
+							"useParentLayout": false
+							"vSizePolicy": 6
+						} )
+					}, new FormLayoutConstraints( class java.lang.String ) {
+						"value": "right"
+					} )
 				} )
+			} )
+			add( new FormContainer( "javax.swing.JToolBar", new FormLayoutManager( class javax.swing.JToolBar ) ) {
+				name: "toolBar1"
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 640, 600 )
+			"size": new java.awt.Dimension( 800, 735 )
 		} )
 	}
 }

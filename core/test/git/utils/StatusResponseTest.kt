@@ -1,8 +1,11 @@
 package git.utils
 
 import org.assertj.core.api.Assertions.*
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.api.extension.ExtendWith
+import org.junit.jupiter.api.function.Executable
 import org.mockito.junit.jupiter.MockitoExtension
 
 @ExtendWith(MockitoExtension::class)
@@ -58,7 +61,19 @@ class StatusResponseTest{
 
         ))
     }
+}
 
+@ExtendWith(MockitoExtension::class)
+class FilePermissionTest{
     @Test
-    fun ``
+    fun `should transfor an integer into permissions`(){
+        assertAll(
+                 { assertTrue(FilePermissions(6).read) },
+                 { assertFalse(FilePermissions(3).read) },
+                 { assertTrue(FilePermissions(2).write) },
+                 { assertFalse(FilePermissions(5).write) },
+                 { assertTrue(FilePermissions(5).execute) },
+                 { assertFalse(FilePermissions(6).execute) }
+        )
+    }
 }

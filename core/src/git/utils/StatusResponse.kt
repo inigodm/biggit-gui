@@ -8,7 +8,9 @@ class StatusResponse{
         if (info.get(0) == "?") files.add(FileInfo(path = info.get(1)))
         if (info.get(0) == "!") files.add(FileInfo(path = info.get(1)))
         if (info.get(0) == "1") files.add(FileInfo(inHEAD = info.get(6), inIndex = info.get(7), path = info.get(8)))
-        if (info.get(0) == "2") files.add(FileInfo(inHEAD = info.get(6), inIndex = info.get(7), path = info.get(9), previousPath = info.get(10), xScore=info.get(8)))
+        if (info.get(0) == "2") files.add(FileInfo(inHEAD = info.get(6), inIndex = info.get(7), path = info.get(9),
+                previousPath = info.get(10), xScore=info.get(8),
+                octHead = buildDataPermission(info.get(3))))
         if (info.get(0).toUpperCase() == "U") files.add(FileInfo(path = info.get(10)))
     }
 }
@@ -52,7 +54,37 @@ data class FileInfo(
         val inIndex: String = "",
         val path: String,
         val previousPath: String = "",
-        val xScore: String = "")
+        val xScore: String = "",
+        val octHead: FileUserPermission = buildDataPermission(""),
+        val octIndex: FileUserPermission = buildDataPermission(""),
+        val octWorkingTree: FileUserPermission = buildDataPermission(""))
+
+fun buildDataPermission(permissions: String): FileUserPermission{
+    if (permissions.length > 2){
+        var aux = permissions.substring(permissions.length - 3)
+        return FileUserPermission(
+                owner = FilePermissions(aux.get(0).toInt()),
+                group = FilePermissions(aux.get(1).toInt()),
+                others = FilePermissions(aux.get(2).toInt())
+        )
+    }
+    return FileUserPermission()
+}
+
+data class FileUserPermission(
+        var owner: FilePermissions = FilePermissions(0),
+        var group: FilePermissions = FilePermissions(0),
+        var others: FilePermissions = FilePermissions(0))
+
+data class FilePermissions(
+        var read: Boolean = false,
+        var write: Boolean = false,
+        var execute: Boolean = false){
+
+    constructor(octet: Int): this(octet.and(4) > 0,
+            octet.and(2) > 0,
+            octet.and(1) > 0)
+}
 
 /*
 Changed Tracked Entries

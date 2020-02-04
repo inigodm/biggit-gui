@@ -1,6 +1,6 @@
 package inigo.controls.accordion;
 
-import com.gg.slider.SideBar.SideBarMode;
+import inigo.controls.accordion.SideBar.SideBarMode;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;

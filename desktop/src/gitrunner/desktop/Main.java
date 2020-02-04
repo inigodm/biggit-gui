@@ -14,11 +14,10 @@ public class Main {
         } catch( Exception ex ) {
             System.err.println( "Failed to initialize LaF" );
         }
-        MainWindow mw = new MainWindow(new CLIGit("/home/inigo/codel/biggit-gui", new Consumer<String>() {
-            @Override
-            public void accept(String s) {
-              System.out.println(s);
-            }
-        }));
+        MainWindow mw = new MainWindow(
+                new CLIGit(
+                        "/home/inigo/codel/biggit-gui",
+                        System.out::println,
+                System.out));
     }
 }

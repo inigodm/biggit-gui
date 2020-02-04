@@ -1,4 +1,4 @@
-package git.desktop.utils
+package gitrunner.desktop.utils
 
 import java.io.IOException
 import java.io.OutputStream

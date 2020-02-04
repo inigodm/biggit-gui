@@ -1,36 +1,37 @@
 package inigo.gitgui.git.cli
 
 import com.google.gson.Gson
-import git.utils.StatusResponse
+import gitrunner.utils.StatusResponse
 import inigo.gitgui.git.Git
-import git.utils.buildVoidStatusResponse
-import git.utils.runCommand
+import gitrunner.utils.buildVoidStatusResponse
+import gitrunner.utils.runCommandSync
 import java.io.File
 import java.io.OutputStream
 import java.io.PrintStream
 import java.util.function.Consumer
 
-class CLIGit(var path: String, var consumer: Consumer<String> = Consumer { println(it) }) : Git{
-    lateinit var ps: PrintStream
+class CLIGit(var path: String,
+             var consumer: Consumer<String> = Consumer { println(it) },
+             var ps: PrintStream = System.out) : Git{
 
     override fun clone(URI: String, directory: String, allBranches: Boolean) {
         path = directory
-        "git clone $URI $path".runCommand(File(path))
+        "git clone $URI $path".runCommandSync(File(path))
     }
 
     override fun init(directory: String) {
-        "git init".runCommand(File(path))
+        "git init".runCommandSync(File(path))
     }
 
     override fun open(directory: String) {
-        "git open $directory".runCommand()
+        "git open $directory".runCommandSync()
     }
 
     override fun status(): String {
         val output = mutableListOf<String>()
         var res = buildVoidStatusResponse()
         try {
-            "git status --porcelain=v2".runCommand(File(path), Consumer { output.add(it); consumer.accept(it) })
+            "git status --porcelain=v2".runCommandSync(File(path), Consumer {  output.add(it); println("llega esto $output"); consumer.accept(it) })
             ps.flush()
         } catch (e: Exception) {
             e.message
@@ -38,19 +39,21 @@ class CLIGit(var path: String, var consumer: Consumer<String> = Consumer { print
         }
         var sr = StatusResponse()
         output.forEach {
-            val clas = it.substring(2, 4)
+            it.substring(2, 4)
             sr.evaluate(it)
 
         }
-        println(output)
         val gson = Gson()
-        println(gson.to(res))
-        return gson.toJson(res)
+        return gson.toJson(sr)
     }
 
     override fun setOutStream(os: OutputStream) {
         ps = PrintStream(os);
         consumer = Consumer { ps.println(it) }
+    }
+
+    override fun log() {
+        "git log".runCommandSync(File(path))
     }
 }
 

@@ -1,4 +1,4 @@
-package git.desktop.utils;
+package gitrunner.desktop.utils;
 
 import javax.swing.*;
 import java.io.IOException;

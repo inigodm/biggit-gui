@@ -1,4 +1,5 @@
-package git.utils
+
+package gitrunner.utils
 
 import kotlinx.coroutines.*
 import java.io.File
@@ -6,14 +7,28 @@ import java.util.function.Consumer
 import java.util.stream.Stream
 
 
-fun String.runCommand(workingDir: File = File(System.getProperty("user.home") + "/codel/gitgui/borrame"),
+fun String.runCommandAsync(workingDir: File = File(System.getProperty("user.home") + "/codel/gitgui/borrame"),
                       consumer: Consumer<String> = Consumer { println(it) }) {
     println("Running $this")
-    consumer.accept("->$this")
     AsyncRunner(consumer).runAsync(workingDir, this)
 }
 
-class AsyncRunner(val consumer: Consumer<String> = Consumer { println(it) }) : CoroutineScope {
+fun String.runCommandSync(workingDir: File = File(System.getProperty("user.home") + "/codel/gitgui/borrame"),
+                          consumer: Consumer<String> = Consumer { println(it) },
+                          errorConsumer: Consumer<String> = Consumer { System.err.println(it) }) {
+    println(this)
+    val builder = ProcessBuilder()
+    builder.command("sh", "-c", this)
+    builder.directory(workingDir)
+    val process = builder.start()
+    Stream.of(process.inputStream.bufferedReader())
+            .forEach { it.forEachLine { i -> consumer.accept(i) } }
+    Stream.of(process.errorStream.bufferedReader())
+            .forEach { it.forEachLine { i -> errorConsumer.accept(i) } }
+
+}
+
+class AsyncRunner(private val consumer: Consumer<String> = Consumer { println(it) }) : CoroutineScope {
     private val job = Job() // or SupervisorJob()
     override val coroutineContext = job + Dispatchers.Default
 
@@ -41,6 +56,5 @@ class AsyncRunner(val consumer: Consumer<String> = Consumer { println(it) }) : C
         val process = builder.start()
         Stream.of(process.inputStream.bufferedReader(), process.errorStream.bufferedReader())
                 .forEach { it.forEachLine { i -> consumer.accept(i) } }
-
     }
 }

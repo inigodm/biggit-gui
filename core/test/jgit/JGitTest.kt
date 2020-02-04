@@ -2,7 +2,7 @@ package jgit
 
 import inigo.gitgui.git.exceptions.GitException
 import inigo.gitgui.git.jgit.JGit
-import git.utils.runCommand
+import gitrunner.utils.runCommandSync
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
@@ -20,7 +20,7 @@ class JGitTest{
 
     @BeforeEach
     fun setup() {
-        "rm -rf /home/inigo/borrame".runCommand()
+        "rm -rf /home/inigo/borrame".runCommandSync()
         git = JGit()
     }
 

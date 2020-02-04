@@ -1,10 +1,9 @@
-package git.desktop;
+package gitrunner.desktop;
 
 
-import com.intellij.uiDesigner.core.*;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
-import git.desktop.utils.JTextAreOutputStream;
+import gitrunner.desktop.utils.JTextAreOutputStream;
 import inigo.gitgui.git.Git;
 
 import javax.swing.*;

@@ -2,8 +2,8 @@ package inigo.gitgui.git.jgit
 
 import com.google.gson.Gson
 import inigo.gitgui.git.exceptions.GitException
-import git.utils.FileInfo
-import git.utils.buildVoidStatusResponse
+import gitrunner.utils.FileInfo
+import gitrunner.utils.buildVoidStatusResponse
 import org.eclipse.jgit.api.Git
 import org.eclipse.jgit.errors.RepositoryNotFoundException
 import org.eclipse.jgit.lib.TextProgressMonitor
@@ -56,5 +56,9 @@ class JGit(var writer: Writer = PrintWriter(System.out)): inigo.gitgui.git.Git{
 
     override fun setOutStream(os: OutputStream) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun log(){
+        git.log().all()
     }
 }

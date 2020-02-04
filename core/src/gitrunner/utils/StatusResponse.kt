@@ -1,17 +1,17 @@
-package git.utils
+package gitrunner.utils
 
 class StatusResponse{
     var files = mutableListOf<FileInfo>();
 
     fun evaluate(line: String){
         val info = line.split("\\s+".toRegex())
-        if (info.get(0) == "?") files.add(FileInfo(path = info.get(1)))
-        if (info.get(0) == "!") files.add(FileInfo(path = info.get(1)))
-        if (info.get(0) == "1") files.add(FileInfo(inHEAD = info.get(6), inIndex = info.get(7), path = info.get(8)))
-        if (info.get(0) == "2") files.add(FileInfo(inHEAD = info.get(6), inIndex = info.get(7), path = info.get(9),
+        if (info.get(0) == "?") files.add(FileInfo(path = info.get(1), state = info.get(0)))
+        if (info.get(0) == "!") files.add(FileInfo(path = info.get(1), state = info.get(0)))
+        if (info.get(0) == "1") files.add(FileInfo(inHEAD = info.get(6), inIndex = info.get(7), path = info.get(8), state = info.get(1)))
+        if (info.get(0) == "2") files.add(FileInfo(inHEAD = info.get(6), inIndex = info.get(7), path = info.get(9), state = info.get(1),
                 previousPath = info.get(10), xScore=info.get(8),
                 octHead = buildDataPermission(info.get(3))))
-        if (info.get(0).toUpperCase() == "U") files.add(FileInfo(path = info.get(10)))
+        if (info.get(0).toUpperCase() == "U") files.add(FileInfo(path = info.get(10), state = info.get(0)))
     }
 }
 
@@ -57,7 +57,8 @@ data class FileInfo(
         val xScore: String = "",
         val octHead: FileUserPermission = buildDataPermission(""),
         val octIndex: FileUserPermission = buildDataPermission(""),
-        val octWorkingTree: FileUserPermission = buildDataPermission(""))
+        val octWorkingTree: FileUserPermission = buildDataPermission(""),
+        val state: String = "")
 
 fun buildDataPermission(permissions: String): FileUserPermission{
     if (permissions.length > 2){

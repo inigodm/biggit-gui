@@ -8,4 +8,5 @@ interface Git{
     fun open(directory: String)
     fun status(): String
     fun setOutStream(os: OutputStream)
+    fun log()
 }

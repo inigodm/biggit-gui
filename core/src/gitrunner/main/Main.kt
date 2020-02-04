@@ -1,6 +1,6 @@
 package inigo.gitgui.git.main
 
-import git.utils.runCommand
+import gitrunner.utils.runCommandSync
 
 
 object Main {
@@ -14,6 +14,6 @@ object Main {
             .setDirectory(File(System.getProperty("user.home")+"/codel/gitgui/borrame"))
             .call();
     */
-        "ls -lrt /bin".runCommand()
+        "ls -lrt /bin".runCommandSync()
     }
 }

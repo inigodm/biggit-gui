@@ -1,10 +1,10 @@
-package inigo.gitgui.git.cli
+package gitrunner.cli
 
 import com.google.gson.Gson
 import gitrunner.utils.StatusResponse
 import inigo.gitgui.git.Git
 import gitrunner.utils.buildVoidStatusResponse
-import gitrunner.utils.runCommandSync
+import gitrunner.utils.runCommand
 import java.io.File
 import java.io.OutputStream
 import java.io.PrintStream
@@ -16,22 +16,22 @@ class CLIGit(var path: String,
 
     override fun clone(URI: String, directory: String, allBranches: Boolean) {
         path = directory
-        "git clone $URI $path".runCommandSync(File(path))
+        "git clone $URI $path".runCommand(File(path))
     }
 
     override fun init(directory: String) {
-        "git init".runCommandSync(File(path))
+        "git init".runCommand(File(path))
     }
 
     override fun open(directory: String) {
-        "git open $directory".runCommandSync()
+        "git open $directory".runCommand()
     }
 
     override fun status(): String {
         val output = mutableListOf<String>()
         var res = buildVoidStatusResponse()
         try {
-            "git status --porcelain=v2".runCommandSync(File(path), Consumer {  output.add(it); println("llega esto $output"); consumer.accept(it) })
+            "git status --porcelain=v2".runCommand(File(path), Consumer {  output.add(it); println("llega esto $output"); consumer.accept(it) })
             ps.flush()
         } catch (e: Exception) {
             e.message
@@ -53,7 +53,7 @@ class CLIGit(var path: String,
     }
 
     override fun log() {
-        "git log".runCommandSync(File(path))
+        "git log".runCommand(File(path))
     }
 }
 

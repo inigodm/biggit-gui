@@ -3,16 +3,13 @@ package jgit
 import com.google.gson.Gson
 import gitrunner.utils.FileInfo
 import gitrunner.utils.StatusResponse
-import inigo.gitgui.git.cli.CLIGit
-import inigo.gitgui.git.exceptions.GitException
-import gitrunner.utils.runCommandSync
+import gitrunner.cli.CLIGit
+import gitrunner.utils.runCommand
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import java.io.File
-import java.io.StringWriter
 
 class CLICLIGitTest{
     lateinit var git: CLIGit
@@ -20,14 +17,14 @@ class CLICLIGitTest{
 
     @BeforeEach
     fun setup() {
-        "rm -rf /home/inigo/borrame".runCommandSync()
-        "mkdir /home/inigo/borrame".runCommandSync()
+        "rm -rf /home/inigo/borrame".runCommand()
+        "mkdir /home/inigo/borrame".runCommand()
         git = CLIGit("/home/inigo/borrame")
     }
 
     @Test
     fun `clone must clone an URL into a directory`(){
-        "cp -r /home/inigo/codel/bot /home/inigo/borrame".runCommandSync()
+        "cp -r /home/inigo/codel/bot /home/inigo/borrame".runCommand()
         assertTrue(File("/home/inigo/borrame/bot").exists())
     }
 
@@ -46,7 +43,7 @@ class CLICLIGitTest{
     @Test
     fun `Should obtain info about untracked file and its state and path`(){
         git.init("/home/inigo/borrame")
-        "touch /home/inigo/borrame/touched".runCommandSync()
+        "touch /home/inigo/borrame/touched".runCommand()
         val res = (Gson()).fromJson(git.status(), StatusResponse::class.java)
         assertThat(res.files).contains(FileInfo(state = "?", path = "touched"))
     }
@@ -54,11 +51,11 @@ class CLICLIGitTest{
     @Test
     fun `Should obtain info about new added file have`(){
         git.init("/home/inigo/borrame")
-        "touch touched".runCommandSync(path)
-        "ls -lrt".runCommandSync(path)
-        "git add touched".runCommandSync(path)
-        "git status".runCommandSync(path)
-        "pwd".runCommandSync()
+        "touch touched".runCommand(path)
+        "ls -lrt".runCommand(path)
+        "git add touched".runCommand(path)
+        "git status".runCommand(path)
+        "pwd".runCommand()
         val res = (Gson()).fromJson(git.status(), StatusResponse::class.java)
         println("files " +res.files)
         assertThat(res.files).contains(FileInfo(inHEAD = "0000000000000000000000000000000000000000",

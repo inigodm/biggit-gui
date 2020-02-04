@@ -1,10 +1,9 @@
 package gitrunner.desktop;
 
 import com.formdev.flatlaf.FlatDarculaLaf;
-import inigo.gitgui.git.cli.CLIGit;
+import gitrunner.cli.CLIGit;
 
 import javax.swing.*;
-import java.util.function.Consumer;
 
 public class Main {
 

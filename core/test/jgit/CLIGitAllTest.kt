@@ -11,7 +11,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.io.File
 
-class CLIGitTest{
+class CLIGitAllTest{
     lateinit var git: CLIGit
     var path = File("/home/inigo/borrame/")
 
